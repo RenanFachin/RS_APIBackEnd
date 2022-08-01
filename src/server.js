@@ -5,6 +5,11 @@ const express = require("express");
 // Inicializando o express
 const app = express();
 
+// Implementando o método GET para quando for solicitado no /message da porta 3333
+app.get("/message", (request, response) => {
+    response.send("Hello, world")
+})
+
 // Criando uma porta para atender as solicitações
 const PORT = 3333;
 
