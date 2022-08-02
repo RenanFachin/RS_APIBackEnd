@@ -1,3 +1,8 @@
+// Importando a AppError
+const AppError = require("../utils/AppError");
+
+
+
 /*
     A classe permite que tenha várias funções dentro, no máximo 5
  
@@ -14,6 +19,11 @@ class UsersController {
     create(request, response){
     // Obtendo as informações passadas pelo método POST
     const { name, email, password } = request.body;
+
+    if(!name){
+        // Se o nome não existir
+        throw new AppError("Nome é obrigatório!");
+    }
 
     response.status(201).json({ name, email, password }); // status(201) para avisar que está criado
     }
