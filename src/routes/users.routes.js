@@ -1,15 +1,19 @@
 // importando o app
 const { Router } = require("express");
 
+
+// Importando o controller
+const UsersController = require("../controllers/UsersController");
+
+
 const usersRoutes = Router();
 
-// MÉTODO POST
-usersRoutes.post("/", (request, response) => {
-    // Obtendo as informações passadas pelo método POST
-    const { name, email, password } = request.body;
+// Instanciando
+const userController = new UsersController();
 
-    response.json({ name, email, password }); // resposta no modo de objeto (json)
-})
+
+// MÉTODO POST
+usersRoutes.post("/", userController.create);
 
 // Exportando
 module.exports = usersRoutes;
