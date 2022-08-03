@@ -28,10 +28,14 @@ class UsersController {
     // Este select faz a conferência se o email já esta em uso por algum usuário
 
     if (checkUserExists){
-        throw new AppError("Este e-mail já está em uso.")
+        throw new AppError("Este e-mail já está em uso.");
     }
 
-    return response.status(201).json()
+    // CADASTRO DE USUÁRIOS
+    await database.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
+    [ name, email, password ]);
+
+    return response.status(201).json();
     }
 }
 
