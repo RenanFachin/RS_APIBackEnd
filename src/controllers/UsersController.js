@@ -66,8 +66,8 @@ class UsersController {
             throw new AppError ("Este e-mail já está em uso.")
         }
 
-        user.name = name;
-        user.email = email;
+        user.name = name ?? user.name;  // ?? significa  que se não houver conteúdo no novo name, será deixado o que já estava lá no banco de dados (OU É NAME OU É USER.NAME)
+        user.email = email ?? user.email;
 
         // ALTERANDO A SENHA
         // Se não for informado a senha antiga:
