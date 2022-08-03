@@ -34,7 +34,7 @@ class UsersController {
         throw new AppError("Este e-mail já está em uso.");
     }
 
-    
+
     // Fazendo a criptografia da senha com um fator de complexidade 8
     const hashedPassword = await hash(password, 8);
 
@@ -43,6 +43,43 @@ class UsersController {
     [ name, email, hashedPassword ]);
 
     return response.status(201).json();
+    }
+
+    async update(request, response) {
+        const { name, email } = request.body;
+        const { id } = request.params;
+
+        const database = await sqliteConnection();
+        // Selecionando o usuário apartir de sua primary key (id)
+        const user = await database.get("SELECT * FROM users WHERE id = (?)", [id]);
+
+        // Caso o usuário não exista (!user)
+        if(!user){
+            throw new AppError("Usuário não encontrado");
+        }
+
+        // Conferindo se o usuário não está tentando trocar o email para um email já em uso
+        const userWithUpdatedEmail = await database.get("SELECT * FROM users WHERE email =(?)", [email]);
+
+        // Se encontrar esse email e esse email do id for diferente da id do usuário
+        if(userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id){
+            throw new AppError ("Este e-mail já está em uso.")
+        }
+
+        user.name = name;
+        user.email = email;
+
+        await database.run(`
+            UPDATE users SET
+            name = ?,
+            email = ?,
+            updated_at = ?
+            WHERE id = ?`,
+            [user.name, user.email, new Date(), id]
+            );
+        
+        return response.status(200).json();
+        
     }
 }
 

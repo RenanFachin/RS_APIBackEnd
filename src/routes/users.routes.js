@@ -14,5 +14,8 @@ const userController = new UsersController();
 // MÉTODO POST
 usersRoutes.post("/", userController.create);
 
+// ADICIONANDO UMA NOVA ROTA
+usersRoutes.put("/:id", userController.update)
+
 // Exportando
 module.exports = usersRoutes;
