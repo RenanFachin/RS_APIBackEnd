@@ -1,6 +1,8 @@
 // Importando a AppError
 const AppError = require("../utils/AppError");
 
+// Importando a conexão com o banco de dados
+const sqliteConnection = require ("../database/sqlite")
 
 
 /*
@@ -16,18 +18,21 @@ const AppError = require("../utils/AppError");
 
 class UsersController {
     // A classe já sabe que create é um método por isso não precisa do FUNCTION
-    create(request, response){
+     async create(request, response){
     // Obtendo as informações passadas pelo método POST
     const { name, email, password } = request.body;
+    
+    const database = await sqliteConnection();
 
-    if(!name){
-        // Se o nome não existir
-        throw new AppError("Nome é obrigatório!");
+    const checkUserExists = await database.get("SELECT * FROM users WHERE email = (?)" , [email]) // (?) será substituido pelo email enviado pelo request.
+    // Este select faz a conferência se o email já esta em uso por algum usuário
+
+    if (checkUserExists){
+        throw new AppError("Este e-mail já está em uso.")
     }
 
-    response.status(201).json({ name, email, password }); // status(201) para avisar que está criado
+    return response.status(201).json()
     }
 }
-
 
 module.exports = UsersController;
