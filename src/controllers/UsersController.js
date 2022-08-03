@@ -1,3 +1,6 @@
+// IMPORTANDO criptografia
+const { hash } = require ("bcryptjs"); 
+
 // Importando a AppError
 const AppError = require("../utils/AppError");
 
@@ -24,16 +27,20 @@ class UsersController {
     
     const database = await sqliteConnection();
 
+    // CHECANDO SE O EMAIL DIGITADO JÁ EXISTE EM ALGUM LUGAR DA TABELA
     const checkUserExists = await database.get("SELECT * FROM users WHERE email = (?)" , [email]) // (?) será substituido pelo email enviado pelo request.
     // Este select faz a conferência se o email já esta em uso por algum usuário
-
     if (checkUserExists){
         throw new AppError("Este e-mail já está em uso.");
     }
 
+    
+    // Fazendo a criptografia da senha com um fator de complexidade 8
+    const hashedPassword = await hash(password, 8);
+
     // CADASTRO DE USUÁRIOS
     await database.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
-    [ name, email, password ]);
+    [ name, email, hashedPassword ]);
 
     return response.status(201).json();
     }
