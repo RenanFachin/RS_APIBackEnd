@@ -69,10 +69,11 @@ class NotesController{
 
     // função de listar notas
     async index(request, response){
-        const { user_id } = request.query;
+        const { title, user_id } = request.query;
  
         const notes = await knex("notes")
             .where({ user_id })
+            .whereLike("title", `%${title}%`) // Busca por valores que uma palavra contenha dentro
             .orderBy("title"); // para ordenar
 
         return response.json({ notes });
