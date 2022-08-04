@@ -2,7 +2,7 @@
 const config = require ( "../../../knexfile");
 
 // Fazendo o import do knex
-const knex = require(" knex ");
+const knex = require("knex");
 
 // criando a conexão
 const connection = knex(config.development);
