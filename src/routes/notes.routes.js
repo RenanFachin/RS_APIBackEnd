@@ -16,7 +16,9 @@ notesRoutes.post("/:user_id", notesController.create);
 // MÉTODO GET
 notesRoutes.get("/:id", notesController.show); // show é o nome da função
 // MÉTODO DELETE
-notesRoutes.delete("/:id", notesController.delete); // show é o nome da função
+notesRoutes.delete("/:id", notesController.delete); // delete é o nome da função
+// MÉTODO GET
+notesRoutes.get("/", notesController.index); // index é o nome da função, e como é passado como query, basta o "/"
 
 
 // Exportando
