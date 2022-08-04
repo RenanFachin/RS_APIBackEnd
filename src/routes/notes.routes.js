@@ -13,6 +13,8 @@ const notesController = new NotesController();
 
 // MÉTODO POST
 notesRoutes.post("/:user_id", notesController.create);
+// MÉTODO GET
+notesRoutes.get("/:id", notesController.show); // show é o nome da função
 
 
 // Exportando

@@ -39,6 +39,22 @@ class NotesController{
 
         response.json();
     }
+
+    async show(request, response){
+        const { id } = request.params;
+
+        const note = await knex("notes").where({ id }).first();
+        // utilizando o where.first()    para buscar o id como um parametro
+
+        const tags = await knex("tags").where({ note_id: id}).orderBy("name");
+        const links = await knex("links").where({note_id: id}).orderBy("created_at");
+
+        return response.json({
+            ...note,
+            tags,
+            links
+        });
+    }
 }
 
 module.exports = NotesController;
