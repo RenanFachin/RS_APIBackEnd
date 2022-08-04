@@ -1,7 +1,7 @@
 exports.up = knex => knex.schema.createTable("tags", table => {
 
     table.increments("id");
-    table.text("name").notNulable();  // .notNullable() é para não aceitar nulo como resposta
+    table.text("name").notNullable();  // .notNullable() é para não aceitar nulo como resposta
     
     table.integer("note_id").references("id").inTable("notes").onDelete("CASCADE"); 
     // vinculando uma note_id
