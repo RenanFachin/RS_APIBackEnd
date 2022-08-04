@@ -15,6 +15,8 @@ const notesController = new NotesController();
 notesRoutes.post("/:user_id", notesController.create);
 // MÉTODO GET
 notesRoutes.get("/:id", notesController.show); // show é o nome da função
+// MÉTODO DELETE
+notesRoutes.delete("/:id", notesController.delete); // show é o nome da função
 
 
 // Exportando

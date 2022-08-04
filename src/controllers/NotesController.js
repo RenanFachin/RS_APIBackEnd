@@ -1,6 +1,7 @@
 const knex = require("../database/knex");  // Será carregado o arquivo index como default
 
 class NotesController{
+    // criando um anota
     async create(request, response){
 
         const { title, description, tags, links} = request.body;
@@ -40,6 +41,7 @@ class NotesController{
         response.json();
     }
 
+    // mostrando uma nota
     async show(request, response){
         const { id } = request.params;
 
@@ -54,6 +56,15 @@ class NotesController{
             tags,
             links
         });
+    }
+
+    // deletando uma nota
+    async delete(request, response){
+        const { id } = request.params;
+
+        await knex("notes").where({ id }).delete();
+
+        return response.json();
     }
 }
 
