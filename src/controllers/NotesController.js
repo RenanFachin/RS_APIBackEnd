@@ -69,15 +69,26 @@ class NotesController{
 
     // função de listar notas
     async index(request, response){
-        const { title, user_id } = request.query;
- 
-        const notes = await knex("notes")
+        const { title, user_id, tags } = request.query;
+
+        let notes;
+
+        // Se existir uma tag, faça
+        if(tags){
+            // convertendo de um texto simples para um vetor
+            const filterTags = tags.split(',').map(tag => tag.trim());
+            
+            notes = await knex("tags")
+                .whereIn("name", filterTags); // Fazendo a comparação das tags com os vetores dentro de filterTags
+
+        }else{
+            notes = await knex("notes")
             .where({ user_id })
             .whereLike("title", `%${title}%`) // Busca por valores que uma palavra contenha dentro
             .orderBy("title"); // para ordenar
+        }
 
         return response.json({ notes });
-
 
     }
 }
