@@ -4,6 +4,9 @@ const { Router } = require("express");
 // Importando o controller
 const TagsController = require("../controllers/TagsController");
 
+// IMportando o middlware de autenticação
+const ensureAuthenticated = require("../middleware/ensureAuthenticated");
+
 const tagsRoutes = Router();
 
 
@@ -11,7 +14,7 @@ const tagsRoutes = Router();
 const tagsController = new TagsController();
 
 
-tagsRoutes.get("/:user_id", tagsController.index); 
+tagsRoutes.get("/", ensureAuthenticated, tagsController.index); 
 
 
 // Exportando
