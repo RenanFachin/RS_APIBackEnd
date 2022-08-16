@@ -4,15 +4,20 @@ const { Router } = require("express");
 // Importando o controller
 const NotesController = require("../controllers/NotesController");
 
+// IMportando o middlware de autenticação
+const ensureAuthenticated = require("../middleware/ensureAuthenticated");
+
 const notesRoutes = Router();
 
 
 // Instanciando
 const notesController = new NotesController();
 
+notesRoutes.use(ensureAuthenticated); // aplicado o middleware para todas as rotas
+
 
 // MÉTODO POST
-notesRoutes.post("/:user_id", notesController.create);
+notesRoutes.post("/", notesController.create);
 // MÉTODO GET
 notesRoutes.get("/:id", notesController.show); // show é o nome da função
 // MÉTODO DELETE

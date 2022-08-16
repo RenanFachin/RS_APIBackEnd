@@ -7,7 +7,7 @@ class NotesController{
         const { title, description, tags, links} = request.body;
         // desestruturando o que será enviado pelo body da requisição
 
-        const { user_id } = request.params; // pegando o user_id que tá sendo enviado via parâmetro
+        const user_id = request.user.id
 
         // Cadastrando o id da nota cadastrada
         const note_id = await knex ("notes").insert({
@@ -69,7 +69,9 @@ class NotesController{
 
     // função de listar notas
     async index(request, response){
-        const { title, user_id, tags } = request.query;
+        const { title, tags } = request.query;
+
+        const user_id = request.user.id;
 
         let notes;
 
