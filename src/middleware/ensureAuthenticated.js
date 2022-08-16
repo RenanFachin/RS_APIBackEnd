@@ -18,21 +18,21 @@ function ensureAuthenticated(request, response, next){
 
     // Caso o token exista
     const [, token] = authHeader.split(" ") // Fazendo a separação quando houver um espaço e adicionando em um vetor (chamado de token) que é a segunda posição
+    // primeira posição do vetor é omitida
 
     try{
         // verificando se é um token válido
-        const {sub: user_id} = verify(token, authConfig.jwt.secret);
+        const { sub: user_id } = verify(token, authConfig.jwt.secret);
         // Desestruturando o verify e buscando o parâmetro SUB e dizendo que sub é user_id (um apelido) agora
 
         // criando .user com propriedade chamada id e adicionando o user_id que veio do verify
         request.user = {
-            id: Number(user_id)
+            id: Number(user_id),
         };
 
         // chamando a próxima função
         return next();
-    }
-    catch{
+    } catch{
         // caso o token seja inválido
         throw new AppError("JWT Token inválido", 401);
     }
