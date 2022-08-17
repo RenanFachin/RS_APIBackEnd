@@ -1,9 +1,9 @@
 <div align="center">
-  <img alt="Logo Explorer" title="Explorer" src="./assets/logoExplorer.png">
+  <img alt="Logo Explorer" title="Explorer" src="https://i.imgur.com/2IqqDoo.png">
 </div>
 <br>
 <div align="center">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/RenanFachin/RS_APICinemaRating?color=%23725CED&style=flat-square">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/RenanFachin/RS_APIBackEnd?color=%23725CED&style=flat-square">
 </div>
 
 
