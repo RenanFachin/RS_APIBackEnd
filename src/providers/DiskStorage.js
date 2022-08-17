@@ -24,12 +24,14 @@ class DiskStorage{
 
         // tratando possíveis erros
         try{
+            // .stat é uma função do fs e vai retornar o status do arquivo
             await fs.promises.stat(filePath);
         } catch{
             return;
         }
 
-        //Deletando um arquivo
+        // Deletando um arquivo
+        // Unlink também é uma função do fs e faz a remoção do arquivo
         await fs.promises.unlink(file)
     }
 }
