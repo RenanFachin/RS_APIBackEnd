@@ -4,6 +4,8 @@ require("express-async-errors");
 const migrationsRun = require("./database/sqlite/migrations") // importando a database
 const AppError= require("./utils/AppError") // Importando o AppError
 
+const uploadConfig = require("./configs/upload") // Importando as configurações de upload
+
 const express = require("express");
 const routes = require("./routes") // acessando a pasta routes e carregando index.js como padrão
 
@@ -11,6 +13,9 @@ migrationsRun();
 
 const app = express();
 app.use(express.json());
+
+// Buscando o arquivo da foto do usuário
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 
 app.use(routes);
 

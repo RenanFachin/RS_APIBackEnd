@@ -5,10 +5,13 @@ const { Router } = require("express");
 const multer = require("multer")
 
 // Importando o uploadConfig
-const uploadConfig = require("../configs/upload") 
+const uploadConfig = require("../configs/upload")
 
 // Importando o controller
 const UsersController = require("../controllers/UsersController");
+
+// Importando o controller de avatar
+const UserAvatarController = require("../controllers/UserAvatarController");
 
 // IMportando o middlware de autenticação
 const ensureAuthenticated = require("../middleware/ensureAuthenticated");
@@ -20,7 +23,7 @@ const upload = multer(uploadConfig.MULTER)
 
 // Instanciando
 const userController = new UsersController();
-
+const userAvatarController = new UserAvatarController();
 
 // MÉTODO POST
 usersRoutes.post("/", userController.create);
@@ -30,11 +33,7 @@ usersRoutes.put("/", ensureAuthenticated, userController.update)
 // qnd for acessada a rota, entrará o ensureAuthenticated para verificar e só depois (next) irá para o update
 
 // Atualizando um campo específico. Neste caso, o campo de avatar
-usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), (request,response) => {
-    //testando
-    console.log(request.file.filename);
-    response.json()
-})
+usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.uptade)
 
 // Exportando
 module.exports = usersRoutes;
