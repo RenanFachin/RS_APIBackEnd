@@ -38,6 +38,8 @@ Desenvolvimento de uma API que concentrará dados de usuários, anotações e ta
   `bcryptjs`
   `Knex`
   `jsonwebtoken`
+  `Cors`
+  `Axios`
 
 <br>
 
