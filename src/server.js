@@ -6,12 +6,14 @@ const AppError= require("./utils/AppError") // Importando o AppError
 
 const uploadConfig = require("./configs/upload") // Importando as configurações de upload
 
+const cors = require("cors")
 const express = require("express");
 const routes = require("./routes") // acessando a pasta routes e carregando index.js como padrão
 
 migrationsRun();
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 // Buscando o arquivo da foto do usuário

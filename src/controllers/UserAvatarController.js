@@ -3,7 +3,7 @@ const AppError = require("../utils/AppError")
 const DiskStorage = require("../providers/DiskStorage")
 
 class UserAvatarController{
-    async uptade(request, response){
+    async update(request, response){
         const user_id = request.user.id;
         const avatarFileName = request.file.filename;
 
