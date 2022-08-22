@@ -6,8 +6,8 @@ class TagsController{
  
 
         const tags = await knex("tags") // knex ir na tabela de tags
-            .where({ user_id }); // e filtra onde seja igual ao user_id
-
+            .where({ user_id }) // e filtra onde seja igual ao user_id
+            .groupBy("name") // agrupando as tags por nome iguais
         return response.json(tags)
     }
 }
