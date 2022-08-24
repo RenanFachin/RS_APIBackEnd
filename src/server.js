@@ -43,5 +43,5 @@ app.use((error, request, response, next ) => {
 });
 
 // || é para definir um valor "default"
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`server is running on Port: ${PORT}`));
