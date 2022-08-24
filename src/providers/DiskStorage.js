@@ -1,5 +1,5 @@
 // Importando o fs do próprio node que é para lidar com manipulação de arquivos
-const fs = require("fs");
+const fs = require('fs');
 // Importando o path do próprio node para lidar com diretórios
 const path = require("path");
 

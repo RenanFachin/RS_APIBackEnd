@@ -40,7 +40,7 @@ Desenvolvimento de uma API que concentrará dados de usuários, anotações e ta
   `jsonwebtoken`
   `Cors`
   `Axios`
-
+  `DotEnv`
 <br>
 
 ### 💻 Programas utilizados para teste e desenvolvimento

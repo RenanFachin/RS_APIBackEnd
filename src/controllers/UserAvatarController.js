@@ -10,8 +10,7 @@ class UserAvatarController{
         // Instanciando o diskstorage
         const diskStorage = new DiskStorage()
 
-        const user = await knex("users") // knex ir na tabela de tags
-        .where({ id: user_id }).first(); // busca por usuários onde o id é igual ao user_id
+        const user = await knex("users").where({ id: user_id }).first(); // busca por usuários onde o id é igual ao user_id
 
 
         // verificando se o usuário não existe

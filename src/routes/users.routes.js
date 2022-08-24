@@ -33,7 +33,7 @@ usersRoutes.put("/", ensureAuthenticated, userController.update)
 // qnd for acessada a rota, entrará o ensureAuthenticated para verificar e só depois (next) irá para o update
 
 // Atualizando um campo específico. Neste caso, o campo de avatar
-usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update)
+usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update);
 
 // Exportando
 module.exports = usersRoutes;

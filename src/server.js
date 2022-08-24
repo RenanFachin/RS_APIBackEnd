@@ -1,12 +1,15 @@
 // importando a biblioteca para tratamento de erros
 require("express-async-errors");
 
-const migrationsRun = require("./database/sqlite/migrations") // importando a database
-const AppError= require("./utils/AppError") // Importando o AppError
+require("dotenv/config") // importando o dotenv para ter acesso as variáveis de ambiente
 
+const migrationsRun = require("./database/sqlite/migrations") // importando a database
 const uploadConfig = require("./configs/upload") // Importando as configurações de upload
 
 const cors = require("cors")
+
+const AppError= require("./utils/AppError") // Importando o AppError
+
 const express = require("express");
 const routes = require("./routes") // acessando a pasta routes e carregando index.js como padrão
 
@@ -17,7 +20,7 @@ app.use(cors())
 app.use(express.json());
 
 // Buscando o arquivo da foto do usuário
-app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER));
 
 app.use(routes);
 
@@ -39,5 +42,6 @@ app.use((error, request, response, next ) => {
     });
 });
 
-const PORT = 3333;
+// || é para definir um valor "default"
+const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => console.log(`server is running on Port: ${PORT}`));
