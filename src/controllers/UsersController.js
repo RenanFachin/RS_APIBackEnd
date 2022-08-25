@@ -9,6 +9,8 @@ const sqliteConnection = require ("../database/sqlite")
 
 const UserRepository = require("../repositories/UserRepository")
 
+const UserCreateService = require("../services/UserCreateService")
+
 /*
     A classe permite que tenha várias funções dentro, no máximo 5
  
@@ -26,21 +28,10 @@ class UsersController {
     // Obtendo as informações passadas pelo método POST
     const { name, email, password } = request.body;
 
-    const userRepository = new UserRepository() 
-    
-    // CHECANDO SE O EMAIL DIGITADO JÁ EXISTE EM ALGUM LUGAR DA TABELA
-    const checkUserExists = await userRepository.findByEmail(email) // (?) será substituido pelo email enviado pelo request.
-    // Este select faz a conferência se o email já esta em uso por algum usuário
-    if (checkUserExists){
-        throw new AppError("Este e-mail já está em uso.");
-    }
+    const userRepository = new UserRepository() // instancia o repositório do banco de dados
+    const userCreateService = new UserCreateService(userRepository) // passa para dentro da createService o banco de dados que será utiizado
 
-
-    // Fazendo a criptografia da senha com um fator de complexidade 8
-    const hashedPassword = await hash(password, 8);
-
-    // CADASTRO DE USUÁRIOS
-    await userRepository.create({name, email, password: hashedPassword})
+    await userCreateService.execute({ name, email, password }); // executa a função execute que irá pegar o user repository passado acima para dentro do construtor e consequentemente para dentro da função execute
 
     return response.status(201).json();
     }
