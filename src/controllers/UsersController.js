@@ -7,6 +7,7 @@ const AppError = require("../utils/AppError");
 // Importando a conexão com o banco de dados
 const sqliteConnection = require ("../database/sqlite")
 
+const UserRepository = require("../repositories/UserRepository")
 
 /*
     A classe permite que tenha várias funções dentro, no máximo 5
@@ -24,11 +25,11 @@ class UsersController {
      async create(request, response){
     // Obtendo as informações passadas pelo método POST
     const { name, email, password } = request.body;
-    
-    const database = await sqliteConnection();
 
+    const userRepository = new UserRepository() 
+    
     // CHECANDO SE O EMAIL DIGITADO JÁ EXISTE EM ALGUM LUGAR DA TABELA
-    const checkUserExists = await database.get("SELECT * FROM users WHERE email = (?)" , [email]) // (?) será substituido pelo email enviado pelo request.
+    const checkUserExists = await userRepository.findByEmail(email) // (?) será substituido pelo email enviado pelo request.
     // Este select faz a conferência se o email já esta em uso por algum usuário
     if (checkUserExists){
         throw new AppError("Este e-mail já está em uso.");
@@ -39,8 +40,7 @@ class UsersController {
     const hashedPassword = await hash(password, 8);
 
     // CADASTRO DE USUÁRIOS
-    await database.run("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", 
-    [ name, email, hashedPassword ]);
+    await userRepository.create({name, email, password: hashedPassword})
 
     return response.status(201).json();
     }
