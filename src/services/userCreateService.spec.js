@@ -5,6 +5,16 @@ const AppError = require("../utils/AppError");
 // o async está aqui para poder usr o await dentro da função para simular exatamente o funcionamento da aplicação
 describe("UserCreateService", () =>{
 
+    // Fazendo uma refatoração. Utilizando o beforeEach para que seja executada antes de cada teste
+    // As constantes userRepositoryInMemory e userCreateService são declaradas fora dos testes, para ter um escopo que possa ser utilizado pelos testes
+    let userRepositoryInMemory = null;
+    let userCreateService = null;
+
+    beforeEach(()=>{
+        userRepositoryInMemory = new UserRepositoryInMemory();
+        userCreateService = new UserCreateService(userRepositoryInMemory);
+    })
+
     it("user should be create", async () => {
         const user = {
             name: "User Test",
@@ -12,8 +22,6 @@ describe("UserCreateService", () =>{
             password: "123"
         };
     
-        const userRepositoryInMemory = new UserRepositoryInMemory();
-        const userCreateService = new UserCreateService(userRepositoryInMemory);
         const userCreated = await userCreateService.execute(user)
         
         //debugando
@@ -35,9 +43,6 @@ describe("UserCreateService", () =>{
             email: "user@test.com",
             password: "456"
         }
-
-        const userRepository = new UserRepositoryInMemory()
-        const userCreateService = new UserCreateService(userRepository)
 
         await userCreateService.execute(user1)
 
