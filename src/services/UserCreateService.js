@@ -1,5 +1,5 @@
 // IMPORTANDO criptografia
-const { hash, compare } = require ("bcryptjs"); 
+const { hash } = require ("bcryptjs"); 
 
 // Importando a AppError
 const AppError = require("../utils/AppError");
@@ -28,7 +28,9 @@ class UserCreateService{
         const hashedPassword = await hash(password, 8);
     
         // CADASTRO DE USUÁRIOS
-        await this.userRepository.create({name, email, password: hashedPassword})
+        const userCreated = await this.userRepository.create({name, email, password: hashedPassword})
+
+        return userCreated
     }
 }
 

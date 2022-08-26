@@ -41,6 +41,7 @@ Desenvolvimento de uma API que concentrará dados de usuários, anotações e ta
   `Cors`
   `Axios`
   `DotEnv`
+  `Jest`
 <br>
 
 ### 💻 Programas utilizados para teste e desenvolvimento
